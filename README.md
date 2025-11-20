@@ -23,7 +23,14 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Decision Tree Processing - A backend component built with NestJS that processes decision trees. This application allows customers to define and execute business logic in a flexible, extensible way.
+
+The system supports various action types:
+- **Send SMS**: Sends SMS messages (logged for this exercise)
+- **Send Email**: Sends email messages (logged for this exercise)
+- **Condition**: Evaluates JavaScript expressions and executes branches based on results
+- **Loop**: Executes a subtree a specified number of times
+- **Sequence**: Executes multiple actions in sequence
 
 ## Project setup
 
@@ -31,31 +38,118 @@
 $ npm install
 ```
 
-## Compile and run the project
+## Running the application
+
+### Development mode
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
+# Start the application in development mode with watch
 $ npm run start:dev
 
-# production mode
+# Start the application
+$ npm run start
+
+# Start in debug mode
+$ npm run start:debug
+```
+
+The application will be available at `http://localhost:3000`
+
+### Production mode
+
+```bash
+# Build the application
+$ npm run build
+
+# Start in production mode
 $ npm run start:prod
 ```
 
-## Run tests
+### Docker
 
 ```bash
-# unit tests
+# Build Docker image
+$ docker-compose build
+
+# Start the application with Docker Compose
+$ docker-compose up
+
+# Start in detached mode
+$ docker-compose up -d
+
+# Stop the application
+$ docker-compose down
+```
+
+## API Endpoints
+
+### POST /decision/execute
+
+Executes a decision tree defined in JSON format.
+
+**Request Body:**
+```json
+{
+  "tree": {
+    "type": "SendSMS",
+    "phone": "+1234567890",
+    "message": "Hello World"
+  },
+  "context": {
+    "date": "1.1.2025",
+    "variables": {
+      "x": 10
+    }
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "status": "ok"
+}
+```
+
+## Running tests
+
+### Unit tests
+
+```bash
+# Run all unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
+# Run tests in watch mode
+$ npm run test:watch
 
-# test coverage
+# Run tests with coverage
+$ npm run test:cov
+
+# Run tests in debug mode
+$ npm run test:debug
+```
+
+### E2E tests
+
+```bash
+# Run all e2e tests
+$ npm run test:e2e
+```
+
+E2E tests cover:
+- Basic action execution (SendSMS, SendEmail)
+- Examples from documentation (Christmas Greeting, Chained Actions, Loop with Condition)
+- Complex scenarios (nested conditions, loops with sequences)
+- Error handling
+
+### Test coverage
+
+```bash
+# Generate test coverage report
 $ npm run test:cov
 ```
+
+Coverage report will be generated in the `coverage` directory.
 
 ## Deployment
 
