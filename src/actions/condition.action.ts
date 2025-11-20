@@ -16,6 +16,22 @@ export class ConditionAction extends BaseAction {
     const fn = new Function('ctx', `return (${this.expression});`);
     const result = !!fn(ctx);
 
+    // Store the selected decision
+    const decision = {
+      type: 'Condition',
+      expression: this.expression,
+      result: result,
+      selectedPath: result ? 'true' : 'false',
+    };
+
+    ctx.selectedDecision = decision;
+    
+    // Also store in decisions array for tracking all decisions
+    if (!ctx.decisions) {
+      ctx.decisions = [];
+    }
+    ctx.decisions.push(decision);
+
     const next = result ? this.trueAction : this.falseAction;
     if (next) {
       await next.execute(ctx);
