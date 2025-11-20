@@ -13,6 +13,7 @@ export class ConditionAction extends BaseAction {
 
   async execute(ctx: ExecutionContext): Promise<void> {
     // In real life, this should be strongly restricted/sandboxed
+    // could be done with expr-eval library though
     const fn = new Function('ctx', `return (${this.expression});`);
     const result = !!fn(ctx);
 
